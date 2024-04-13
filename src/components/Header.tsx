@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Container, Group, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Image } from "@mantine/core";
+import Logo from '../../public/logo_text.png';
 import classes from "../css/HeaderSimple.module.css";
 
 const links = [
@@ -33,7 +34,7 @@ export function HeaderSimple() {
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
         <Image
-          src="/logo_text.png"
+          src={Logo}
           alt="TQ Logo"
           height={28}
         />
