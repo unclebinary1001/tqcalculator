@@ -16,6 +16,6 @@ const colors: MantineColorsTuple = [
 export const theme = createTheme({
   fontFamily: 'Poppins, sans-serif',
   colors: {
-    light: colors,
+    brand: colors,
   }
 });
