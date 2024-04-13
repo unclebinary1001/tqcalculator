@@ -10,7 +10,8 @@ const colors: MantineColorsTuple = [
     '#424242', //gray, 6
     '#D9D6D6', //light gray, 7
     '#ffffff', //white, 8
-    '#3b218f'
+    '#FFCB2E', //yellow, 9
+    '#7E57C2', //purple, 10
 ];
 
 export const theme = createTheme({
