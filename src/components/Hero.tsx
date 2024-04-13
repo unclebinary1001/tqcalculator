@@ -13,16 +13,22 @@ import HeroImg from "../../public/hero_img.png";
 export function Hero() {
   const theme = useMantineTheme();
   return (
+    <>
     <Flex justify={"space-between"} gap={"sm"}>
       <Image
         src={HeroImg}
         alt={"Mantine hero image"}
-        h={400}
+        h={550}
         w="auto"
         fit="contain"
       />
       <Container style={{ margin: "auto", width: 600 }}>
-        <Title order={2} size={32} style={{ color: theme.colors.brand[0], letterSpacing: 1 }}>
+        <Title
+          order={2}
+          size={36}
+          fw={600}
+          style={{ color: theme.colors.brand[0], letterSpacing: 1 }}
+        >
           Enhance Your Engineering Potential
         </Title>
         <Space h={30} />
@@ -33,8 +39,11 @@ export function Hero() {
         </Text>
         <Space h={30} />
 
-        <Button radius="xl" color={theme.colors.brand[5]}>Get Started</Button>
+        <Button radius="xl" size="lg" color={theme.colors.brand[5]}>
+          Get Started
+        </Button>
       </Container>
     </Flex>
+    </>
   );
 }
