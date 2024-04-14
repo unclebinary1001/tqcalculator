@@ -19,22 +19,21 @@ export function Hero() {
       <Image
         src={HeroImg}
         alt={"Mantine hero image"}
-        h={'100vh'}
-        w="auto"
-        fit="contain"
+        h={{base: "auto", xs: "auto"}}
+        w={{base:"auto", xs:"50%"}}
+        fit="cover"
       />
       <Container style={{ margin: "auto" }}>
         <Title
           order={2}
-          size={36}
-          fw={600}
+          fw={{base: 'md', md:'lg'}}
           style={{ color: theme.colors.brand[0], letterSpacing: 1 }}
         >
           Enhance Your Engineering Potential
         </Title>
         <Space h={30} />
 
-        <Text size="lg">
+        <Text fw={{base:'md'}}>
           We make engineering economy fun, so that you are ready to achieve your
           goals.
         </Text>
