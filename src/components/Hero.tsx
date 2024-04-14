@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Container,
   Flex,
@@ -13,16 +14,16 @@ import HeroImg from "../../public/hero_img.png";
 export function Hero() {
   const theme = useMantineTheme();
   return (
-    <>
-    <Flex justify={"space-between"} gap={"sm"}>
+    <Box>
+    <Flex direction={{base: 'column', xs: 'row'}} justify={{base:"space-between"}} gap={"sm"}>
       <Image
         src={HeroImg}
         alt={"Mantine hero image"}
-        h={550}
+        h={'100vh'}
         w="auto"
         fit="contain"
       />
-      <Container style={{ margin: "auto", width: 600 }}>
+      <Container style={{ margin: "auto" }}>
         <Title
           order={2}
           size={36}
@@ -44,6 +45,6 @@ export function Hero() {
         </Button>
       </Container>
     </Flex>
-    </>
+    </Box>
   );
 }
