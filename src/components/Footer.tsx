@@ -20,7 +20,7 @@ function Footer() {
       <Flex direction="row" align="center" justify="flex-start">
         <Box p={0}>
           <Text
-            size="lg"
+            size="xl"
             fw={600}
             style={{
               fontFamily: "Aldrich, sans-serif",
