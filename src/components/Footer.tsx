@@ -1,53 +1,72 @@
 import {
-  Container,
-  Grid,
   Text,
   Box,
   useMantineTheme,
-  Image,
   Flex,
   Title,
   Space,
   Divider,
 } from "@mantine/core";
-import Logo from "/logo_text.png";
 
 function Footer() {
   const theme = useMantineTheme();
 
   return (
-    <Box bg={theme.colors.brand[1]} px={40} py={40}>
-      <Flex direction="row" align="center" justify="flex-start">
+    <Box
+      ta={{ base: "center", xs: "left" }}
+      bg={theme.colors.brand[1]}
+      px={40}
+      py={40}
+    >
+      <Flex
+        direction={{ base: "column", xs: "row" }}
+        align={{ base: "center", xs: "center" }}
+        justify={{ base: "center", xs: "flex-start" }}
+      >
         <Box p={0}>
           <Text
-            size="xl"
+            fw={700}
+            style={{
+              fontSize: "1.5rem",
+              fontFamily: "Aldrich, sans-serif",
+              color: theme.colors.brand[8],
+            }}
+          >
+            TQ
+          </Text>
+          <Text
             fw={600}
             style={{
               fontFamily: "Aldrich, sans-serif",
               color: theme.colors.brand[8],
             }}
           >
-            TQ 
             Calculator
           </Text>
           <Text
-            size="md"
             style={{
               fontFamily: "Aldrich, sans-serif",
               color: theme.colors.brand[11],
             }}
           >
-            aka TurnQuest Calculator
+            aka Turnquest Calculator
           </Text>
         </Box>
-        <Space w={"50%"}/>
+
+        <Space w={"50%"} display={{ base: "none", xs: "block" }} />
+        <Space h={40} display={{ base: "block", xs: "none" }} />
         <Box>
           <Title order={4} style={{ color: theme.colors.brand[8] }}>
             Links
           </Title>
-          <Text size="sm" style={{ color: theme.colors.brand[8] }}>About Us</Text>
-          <Text size="sm" style={{ color: theme.colors.brand[8] }}>Contribute</Text>
+          <Text size="sm" style={{ color: theme.colors.brand[8] }}>
+            About Us
+          </Text>
+          <Text size="sm" style={{ color: theme.colors.brand[8] }}>
+            Contribute
+          </Text>
         </Box>
+        <Space h={30} display={{ base: "block", xs: "none" }} />
       </Flex>
       <Space h={10} />
       <Divider color={theme.colors.brand[11]} />
