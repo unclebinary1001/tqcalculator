@@ -12,48 +12,41 @@ import {
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import formatDecimals from "../../utils/formatDecimals";
 
-export default function Fa() {
+export default function Pf() {
   const theme = useMantineTheme();
   const navigate = useNavigate();
 
-  const formatDecimals = (num: number, decimals: number) => {
-    const factorString = num.toFixed(decimals);
-    const [integerPart, decimalPart] = factorString.split(".");
-    const formatDecimalPart = decimalPart.padEnd(decimals, "0");
-    console.log('decimal part', formatDecimalPart);
-    return `${integerPart}.${formatDecimalPart}`;
-  }
-
   const [ans, setAns] = useState({
     factor: "0",
-    futureValue: "0",
+    presentValue: "0",
   }); 
 
   const calculateAns = () => {
-    const { P, i, n } = form.values;
+    const { F, i, n } = form.values;
     const rate = i/100;
-    const f = Math.pow(1 + rate,n);
-    const factor = formatDecimals(f, 4);
-    const future = P * f;
-    const futureValue = formatDecimals(future, 2);
-    setAns({ factor, futureValue });
+    const p = Math.pow(1 + rate,-n);
+    const factor = formatDecimals(p, 4);
+    const present = F * p;
+    const presentValue = formatDecimals(present, 2);
+    setAns({ factor, presentValue: presentValue });
   }
 
   const resetAll = () => {
-    form.setValues({ P: 0, i: 0, n: 0 });
-    setAns({ factor: "0", futureValue: "0" });
+    form.setValues({ F: 0, i: 0, n: 0 });
+    setAns({ factor: "0", presentValue: "0" });
   }
 
   
   const form = useForm({
     initialValues: {
-      P: 0,
+      F: 0,
       i: 0,
       n: 0,
     },
     validate: {
-      P: (value) => (value > 0 ? null : 'Principal must be greater than 0'),
+      F: (value) => (value > 0 ? null : 'Future worth must be greater than 0'),
       i: (value) => (value > 0 ? null : 'Interest must be greater than 0'),
       n: (value) => (value > 0 ? null : 'N must be greater than 0'),
     },
@@ -61,7 +54,7 @@ export default function Fa() {
   return (
     <Container p={40}>
       <Title ta={"center"} order={2} fw={600} mb={8}>
-        Convert P to F
+        Convert F to P
       </Title>
       <form
         onSubmit={form.onSubmit(() => {
@@ -72,12 +65,12 @@ export default function Fa() {
         <Grid>
           <Grid.Col span={4}>
             <NumberInput
-              label="Principal P"
+              label="Future Worth W"
               placeholder="Dollars"
               prefix="$"
               hideControls
-              defaultValue={form.values.P}
-              {...form.getInputProps('P')}
+              defaultValue={form.values.F}
+              {...form.getInputProps('F')}
               mb={"md"}
             />
           </Grid.Col>
@@ -86,23 +79,23 @@ export default function Fa() {
               label="Interest Rate i %"
               placeholder="i%"
               hideControls
-              defaultValue={form.values.P}
+              defaultValue={form.values.F}
               {...form.getInputProps('i')}
             />
           </Grid.Col>
           <Grid.Col span={4}>
             <NumberInput
-              label="Number of periods n"
+              label="No. of periods n"
               placeholder="N"
               hideControls
-              defaultValue={form.values.P}
+              defaultValue={form.values.F}
               {...form.getInputProps('n')}
               mb="md"
             />
           </Grid.Col>
           <Grid.Col span={4}>
             <Title order={6} size={"md"} fw={600}>
-              F factor:
+              P/F factor:
             </Title>
             <Box
               px={8}
@@ -121,7 +114,7 @@ export default function Fa() {
           </Grid.Col>
           <Grid.Col span={4}>
             <Title order={6} size={"md"} fw={600}>
-              Future Value F:
+              Present Value P:
             </Title>
             <Box
               px={8}
@@ -134,7 +127,7 @@ export default function Fa() {
                 height: '2em'
               }}
             >
-              <Text size={"md"}>{ans.futureValue == "0"? "": "$" + ans.futureValue}</Text>
+              <Text size={"md"}>{ans.presentValue == "0"? "": "$" + ans.presentValue}</Text>
             </Box>
             </Grid.Col>
         </Grid>
