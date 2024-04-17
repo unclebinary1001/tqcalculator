@@ -21,22 +21,24 @@ export default function Af() {
   const [ans, setAns] = useState({
     factor: "0",
     amountValue: "0",
-  }); 
+  });
 
   const calculateAns = () => {
     const { F, i, n } = form.values;
-    const rate = i/100;
-    const af = rate/ (Math.pow(1 + rate,n) - 1);
+    const rate = i / 100;
+    const af = rate / (Math.pow(1 + rate, n) - 1);
     const amount = F * af;
-    setAns({ factor: formatDecimals(af, 5), amountValue: (F === 0)? "0": formatDecimals(amount, 2) });
-  }
+    setAns({
+      factor: formatDecimals(af, 5),
+      amountValue: F === 0 ? "0" : formatDecimals(amount, 2),
+    });
+  };
 
   const resetAll = () => {
     form.setValues({ F: 0, i: 0, n: 0 });
     setAns({ factor: "0", amountValue: "0" });
-  }
+  };
 
-  
   const form = useForm({
     initialValues: {
       F: 0,
@@ -45,8 +47,8 @@ export default function Af() {
     },
     validate: {
       // F: (value) => (value > 0 ? null : 'Future worth must be greater than 0'),
-      i: (value) => (value > 0 ? null : 'Interest must be greater than 0'),
-      n: (value) => (value > 0 ? null : 'N must be greater than 0'),
+      i: (value) => (value > 0 ? null : "Interest must be greater than 0"),
+      n: (value) => (value > 0 ? null : "N must be greater than 0"),
     },
   });
   return (
@@ -60,37 +62,39 @@ export default function Af() {
         })}
       >
         <Grid>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
               label="Future worth F"
               placeholder="Dollars"
               prefix="$"
               hideControls
               defaultValue={form.values.F}
-              {...form.getInputProps('F')}
+              {...form.getInputProps("F")}
               mb={"md"}
             />
           </Grid.Col>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
               label="Interest Rate i %"
               placeholder="i%"
               hideControls
-              defaultValue={form.values.F}
-              {...form.getInputProps('i')}
+              defaultValue={form.values.i}
+              {...form.getInputProps("i")}
             />
           </Grid.Col>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
               label="No. of periods n"
               placeholder="N"
               hideControls
-              defaultValue={form.values.F}
-              {...form.getInputProps('n')}
+              defaultValue={form.values.n}
+              {...form.getInputProps("n")}
               mb="md"
             />
           </Grid.Col>
-          <Grid.Col span={4}>
+        </Grid>
+        <Grid>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <Title order={6} size={"md"} fw={600}>
               A/F factor:
             </Title>
@@ -102,14 +106,13 @@ export default function Af() {
                 borderRadius: 8,
                 border: "1px solid",
                 borderColor: theme.colors.brand[2],
-                height: '2em'
+                height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.factor == "0"? "": ans.factor}</Text>
+              <Text size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
             </Box>
-           
           </Grid.Col>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <Title order={6} size={"md"} fw={600}>
               Amount A:
             </Title>
@@ -121,12 +124,14 @@ export default function Af() {
                 borderRadius: 8,
                 border: "1px solid",
                 borderColor: theme.colors.brand[2],
-                height: '2em'
+                height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.amountValue == "0"? "": "$" + ans.amountValue}</Text>
+              <Text size={"md"}>
+                {ans.amountValue == "0" ? "" : "$" + ans.amountValue}
+              </Text>
             </Box>
-            </Grid.Col>
+          </Grid.Col>
         </Grid>
 
         <Group justify="flex-start" mt="md">
@@ -134,12 +139,20 @@ export default function Af() {
             type="submit"
             radius="xl"
             size="sm"
-            color={form.isValid() == true? theme.colors.brand[5]: theme.colors.brand[11]}
-            
+            color={
+              form.isValid() == true
+                ? theme.colors.brand[5]
+                : theme.colors.brand[11]
+            }
           >
             <Text>Solve</Text>
           </Button>
-          <Button radius="xl" size="sm" color={theme.colors.brand[13]} onClick={() => resetAll()}>
+          <Button
+            radius="xl"
+            size="sm"
+            color={theme.colors.brand[13]}
+            onClick={() => resetAll()}
+          >
             <Text>Reset</Text>
           </Button>
           <Button

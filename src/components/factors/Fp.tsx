@@ -21,24 +21,23 @@ export default function Fp() {
   const [ans, setAns] = useState({
     factor: "0",
     futureValue: "0",
-  }); 
+  });
 
   const calculateAns = () => {
     const { P, i, n } = form.values;
-    const rate = i/100;
-    const f = Math.pow(1 + rate,n);
+    const rate = i / 100;
+    const f = Math.pow(1 + rate, n);
     const factor = formatDecimals(f, 4);
     const future = P * f;
     const futureValue = formatDecimals(future, 2);
     setAns({ factor, futureValue });
-  }
+  };
 
   const resetAll = () => {
     form.setValues({ P: 0, i: 0, n: 0 });
     setAns({ factor: "0", futureValue: "0" });
-  }
+  };
 
-  
   const form = useForm({
     initialValues: {
       P: 0,
@@ -46,9 +45,9 @@ export default function Fp() {
       n: 0,
     },
     validate: {
-      P: (value) => (value > 0 ? null : 'Principal must be greater than 0'),
-      i: (value) => (value > 0 ? null : 'Interest must be greater than 0'),
-      n: (value) => (value > 0 ? null : 'N must be greater than 0'),
+      P: (value) => (value > 0 ? null : "Principal must be greater than 0"),
+      i: (value) => (value > 0 ? null : "Interest must be greater than 0"),
+      n: (value) => (value > 0 ? null : "N must be greater than 0"),
     },
   });
   return (
@@ -63,37 +62,39 @@ export default function Fp() {
         })}
       >
         <Grid>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
               label="Principal P"
               placeholder="Dollars"
               prefix="$"
               hideControls
               defaultValue={form.values.P}
-              {...form.getInputProps('P')}
+              {...form.getInputProps("P")}
               mb={"md"}
             />
           </Grid.Col>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
               label="Interest Rate i %"
               placeholder="i%"
               hideControls
               defaultValue={form.values.P}
-              {...form.getInputProps('i')}
+              {...form.getInputProps("i")}
             />
           </Grid.Col>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
               label="No. of periods n"
               placeholder="N"
               hideControls
               defaultValue={form.values.P}
-              {...form.getInputProps('n')}
+              {...form.getInputProps("n")}
               mb="md"
             />
           </Grid.Col>
-          <Grid.Col span={4}>
+        </Grid>
+        <Grid>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <Title order={6} size={"md"} fw={600}>
               F factor:
             </Title>
@@ -105,14 +106,13 @@ export default function Fp() {
                 borderRadius: 8,
                 border: "1px solid",
                 borderColor: theme.colors.brand[2],
-                height: '2em'
+                height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.factor == "0"? "": ans.factor}</Text>
+              <Text size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
             </Box>
-           
           </Grid.Col>
-          <Grid.Col span={4}>
+          <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <Title order={6} size={"md"} fw={600}>
               Future Value F:
             </Title>
@@ -124,12 +124,14 @@ export default function Fp() {
                 borderRadius: 8,
                 border: "1px solid",
                 borderColor: theme.colors.brand[2],
-                height: '2em'
+                height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.futureValue == "0"? "": "$" + ans.futureValue}</Text>
+              <Text size={"md"}>
+                {ans.futureValue == "0" ? "" : "$" + ans.futureValue}
+              </Text>
             </Box>
-            </Grid.Col>
+          </Grid.Col>
         </Grid>
 
         <Group justify="flex-start" mt="md">
@@ -137,12 +139,20 @@ export default function Fp() {
             type="submit"
             radius="xl"
             size="sm"
-            color={form.isValid() == true? theme.colors.brand[5]: theme.colors.brand[11]}
-            
+            color={
+              form.isValid() == true
+                ? theme.colors.brand[5]
+                : theme.colors.brand[11]
+            }
           >
             <Text>Solve</Text>
           </Button>
-          <Button radius="xl" size="sm" color={theme.colors.brand[13]} onClick={() => resetAll()}>
+          <Button
+            radius="xl"
+            size="sm"
+            color={theme.colors.brand[13]}
+            onClick={() => resetAll()}
+          >
             <Text>Reset</Text>
           </Button>
           <Button

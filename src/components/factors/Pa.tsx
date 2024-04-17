@@ -60,7 +60,7 @@ import {
           })}
         >
           <Grid>
-            <Grid.Col span={4}>
+            <Grid.Col span={{base:12, xs:6, sm:4}}>
               <NumberInput
                 label="Amount A"
                 placeholder="Dollars"
@@ -71,7 +71,7 @@ import {
                 mb={"md"}
               />
             </Grid.Col>
-            <Grid.Col span={4}>
+            <Grid.Col span={{base:12, xs:6, sm:4}}>
               <NumberInput
                 label="Interest Rate i %"
                 placeholder="i%"
@@ -80,7 +80,7 @@ import {
                 {...form.getInputProps('i')}
               />
             </Grid.Col>
-            <Grid.Col span={4}>
+            <Grid.Col span={{base:12, xs:6, sm:4}}>
               <NumberInput
                 label="No. of periods n"
                 placeholder="N"
@@ -90,7 +90,9 @@ import {
                 mb="md"
               />
             </Grid.Col>
-            <Grid.Col span={4}>
+            </Grid>
+            <Grid>
+            <Grid.Col span={{base:12, xs:6, sm:4}}>
               <Title order={6} size={"md"} fw={600}>
                 P/A factor:
               </Title>
@@ -109,7 +111,7 @@ import {
               </Box>
              
             </Grid.Col>
-            <Grid.Col span={4}>
+            <Grid.Col span={{base:12, xs:6, sm:4}}>
               <Title order={6} size={"md"} fw={600}>
                 Present Worth P:
               </Title>
