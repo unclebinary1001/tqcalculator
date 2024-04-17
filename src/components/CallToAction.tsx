@@ -132,7 +132,7 @@ const Factors = ({ title, description, shortform, route }: FactorsProps) => {
         w={"100%"}
         variant="outline"
         color={theme.colors.brand[2]}
-        onClick={() => navigate(route)}
+        onClick={() => {navigate(route); window.scrollTo(0, 0);} }
       >
         Calculate
       </Button>
