@@ -15,13 +15,14 @@ function Footer() {
     <Box
       ta={{ base: "center", xs: "left" }}
       bg={theme.colors.brand[1]}
+      w={"100%"}
       px={40}
-      py={40}
+      py={20}
     >
       <Flex
         direction={{ base: "column", xs: "row" }}
         align={{ base: "center", xs: "center" }}
-        justify={{ base: "center", xs: "flex-start" }}
+        justify={{ base: "center", xs: "space-around" }}
       >
         <Box p={0}>
           <Text
@@ -53,17 +54,22 @@ function Footer() {
           </Text>
         </Box>
 
-        <Space w={"50%"} display={{ base: "none", xs: "block" }} />
+        <Space w={"20%"} display={{ base: "none", xs: "block" }} />
         <Space h={40} display={{ base: "block", xs: "none" }} />
-        <Box>
-          <Title order={4} style={{ color: theme.colors.brand[8] }}>
+        <Box style={{ color: theme.colors.brand[8] }}>
+          <Title order={4} mb={4}>
             Links
           </Title>
-          <Text size="sm" style={{ color: theme.colors.brand[8] }}>
-            About Us
-          </Text>
-          <Text size="sm" style={{ color: theme.colors.brand[8] }}>
-            Contribute
+          <Text size="sm">About Us</Text>
+          <Text size="sm">Contribute</Text>
+          <Text size="sm">
+            Contact Us:{" "}
+            <a
+              href="mailto:queries@tqcalculator.app"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              queries@tqcalculator.app
+            </a>
           </Text>
         </Box>
         <Space h={30} display={{ base: "block", xs: "none" }} />
