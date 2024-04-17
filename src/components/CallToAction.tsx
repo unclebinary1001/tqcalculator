@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { useMantineTheme } from "@mantine/core";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface FactorsProps {
   title: string;
@@ -27,11 +28,6 @@ const factors: FactorsProps[] = [
     title: "F/A",
     description: "Uniform series compound amount",
     route: "/factors/fa",
-  },
-  {
-    title: "F/G",
-    description: "Uniform gradient future worth",
-    route: "/factors/fg",
   },
   {
     title: "P/F",
@@ -87,13 +83,14 @@ const FactorsList = () => {
 
 const Factors = ({ title, description, route }: FactorsProps) => {
   const theme = useMantineTheme();
+  const navigate = useNavigate();
   return (
     <Card
       shadow="sm"
       padding="md"
-      radius="md"
+      radius="lg"
       w={"auto"}
-      h={{ base: 180, xs: 200 }}
+      h={{ base: 'auto', xs: 200 }}
       withBorder
       style={{ borderColor: theme.colors.brand[4] }}
       mb={"md"}
@@ -119,6 +116,7 @@ const Factors = ({ title, description, route }: FactorsProps) => {
         mt="xs"
         variant="outline"
         color={theme.colors.brand[2]}
+        onClick={() => navigate(route)}
       >
         Calculate
       </Button>
@@ -136,7 +134,6 @@ export function CallToAction() {
         p={40}
         h={"auto"}
         mx={{ base: 20, xs: 20, md: 40, lg: 60, xl: 80 }}
-        // bg={theme.colors.brand[0]}
         style={{
           marginTop: 50,
           marginBottom: 50,
@@ -145,9 +142,10 @@ export function CallToAction() {
         }}
       >
         <Text
-          size={"lg"}
+          size={"md"}
           style={{ color: theme.colors.brand[8] }}
           w={{ base: "auto", xs: "50%" }}
+          h={70}
         >
           All-in-one{" "}
           <span style={{ color: theme.colors.brand[9] }}>
