@@ -9,7 +9,6 @@ import {
   Space,
 } from "@mantine/core";
 import { useMantineTheme } from "@mantine/core";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface FactorsProps {
@@ -142,7 +141,6 @@ const Factors = ({ title, description, shortform, route }: FactorsProps) => {
 };
 
 export function CallToAction() {
-  const [active, setActive] = useState(false);
   const theme = useMantineTheme();
   return (
     <>

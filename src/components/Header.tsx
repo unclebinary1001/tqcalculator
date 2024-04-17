@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Container, Group, Burger, Anchor } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Image } from "@mantine/core";
@@ -14,7 +13,6 @@ const links = [
 
 export function Header() {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,7 +25,6 @@ export function Header() {
       onClick={(event) => {
         event.preventDefault();
         navigate(link.link);
-        setActive(link.link);
       }}
     >
       {link.label}
