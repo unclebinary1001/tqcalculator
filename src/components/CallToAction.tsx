@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 interface FactorsProps {
   title: string;
   description: string;
+  shortform: string;
   route: string;
 }
 
@@ -22,43 +23,57 @@ const factors: FactorsProps[] = [
   {
     title: "F/P",
     description: "Single payment compound amount",
+    shortform: "(F/P, i%, n)",
     route: "/factors/fp",
   },
   {
     title: "F/A",
     description: "Uniform series compound amount",
+    shortform: "(F/A, i%, n)",
     route: "/factors/fa",
+  },
+  {
+    title: "F/G",
+    description: "Uniform gradient compound amount",
+    shortform: "(F/G, i%, n)",
+    route: "/factors/fg",
   },
   {
     title: "P/F",
     description: "Single payment present worth",
+    shortform: "(P/F, i%, n)",
     route: "/factors/pf",
   },
   {
     title: "P/A",
     description: "Uniform series present worth",
+    shortform: "(P/A, i%, n)",
     route: "/factors/pa",
   },
   {
     title: "P/G",
     description: "Uniform gradient present worth",
+    shortform: "(P/G, i%, n)",
     route: "/factors/pg",
   },
   {
     title: "A/F",
     description: "Uniform series sinking fund",
+    shortform: "(A/F, i%, n)",
     route: "/factors/af",
   },
 
   {
     title: "A/P",
     description: "Uniform series capital recovery",
+    shortform: "(A/P, i%, n)",
     route: "/factors/ap",
   },
 
   {
     title: "A/G",
     description: "Uniform gradient uniform series",
+    shortform: "(A/G, i%, n)",
     route: "/factors/ag",
   },
 ];
@@ -81,7 +96,7 @@ const FactorsList = () => {
   );
 };
 
-const Factors = ({ title, description, route }: FactorsProps) => {
+const Factors = ({ title, description, shortform, route }: FactorsProps) => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   return (
@@ -105,15 +120,17 @@ const Factors = ({ title, description, route }: FactorsProps) => {
         {title}
       </Text>
 
-      <Text size="sm" mb={"xs"}>
+      <Text size="sm" mb={5}>
         {description}
       </Text>
-      <Space h={{ base: 20, xs: 40 }} />
+      <Text size="sm" style={{fontStyle: "italic"}} mb={2}>
+        {shortform}
+      </Text>
+      <Space h={{ base: 10, xs:20, sm:30}} />
 
       <Button
         radius="xl"
         w={"100%"}
-        mt="xs"
         variant="outline"
         color={theme.colors.brand[2]}
         onClick={() => navigate(route)}

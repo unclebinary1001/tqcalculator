@@ -9,17 +9,17 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import HeroImg from "../../public/hero_img.png";
+import HeroImg from "/hero_img.png";
 
 export function Hero() {
   const theme = useMantineTheme();
   return (
     <Box>
-    <Flex direction={{base: 'column', xs: 'row'}} justify={{base:"space-between"}} gap={"sm"}>
+    <Flex direction={{base: 'column', xs: 'row'}} justify={{base:"space-around"}} gap={"sm"}>
       <Image
         src={HeroImg}
         alt={"Mantine hero image"}
-        h={{base: "auto", xs: "auto"}}
+        h={'auto'}
         w={{base:"auto", xs:"50%"}}
         fit="cover"
       />
@@ -27,6 +27,7 @@ export function Hero() {
         <Title
           order={2}
           fw={{base: 'md', md:'lg'}}
+          w={{base: 'auto', xs:"50%"}}
           style={{ color: theme.colors.brand[0], letterSpacing: 1 }}
         >
           Enhance Your Engineering Potential
