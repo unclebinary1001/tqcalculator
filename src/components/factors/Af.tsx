@@ -65,7 +65,7 @@ export default function Af() {
           <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
               label="Future worth F"
-              placeholder="Dollars"
+              placeholder="Future worth"
               prefix="$"
               hideControls
               defaultValue={form.values.F}
@@ -75,7 +75,8 @@ export default function Af() {
           </Grid.Col>
           <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
             <NumberInput
-              label="Interest Rate i %"
+              id="interestRate"
+              label="Interest Rate i%"
               placeholder="i%"
               hideControls
               defaultValue={form.values.i}
@@ -109,7 +110,7 @@ export default function Af() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
+              <Text id="factor" size={"md"} role="factor">{ans.factor == "0" ? "" : ans.factor}</Text>
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
@@ -127,7 +128,7 @@ export default function Af() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>
+              <Text id="amount" size={"md"} role="amount">
                 {ans.amountValue == "0" ? "" : "$" + ans.amountValue}
               </Text>
             </Box>
