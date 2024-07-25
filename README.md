@@ -52,7 +52,3 @@ TQ is open-source software licensed under the [MIT License](LICENSE). Feel free 
 ## Contact
 
 For any inquiries or support requests, please contact nzundamahlangu@gmail.com.
-
----
-
-This README provides an overview of TQ, its features, technical details, installation instructions, contribution guidelines, licensing information, acknowledgements, and contact details.
