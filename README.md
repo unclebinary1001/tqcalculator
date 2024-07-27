@@ -52,3 +52,7 @@ TQ is open-source software licensed under the [MIT License](LICENSE). Feel free 
 ## Contact
 
 For any inquiries or support requests, please contact nzundamahlangu@gmail.com.
+
+### Dev Time
+
+[![wakatime](https://wakatime.com/badge/user/018bcec0-034b-4087-aa28-64a97a30a65f/project/018ed609-af11-4514-9fcf-805e6b55746d.svg)](https://wakatime.com/badge/user/018bcec0-034b-4087-aa28-64a97a30a65f/project/018ed609-af11-4514-9fcf-805e6b55746d)
