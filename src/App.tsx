@@ -14,6 +14,7 @@ import Pa from "./components/factors/Pa";
 import Ag from "./components/factors/Ag";
 import Pg from "./components/factors/Pg";
 import Fg from "./components/factors/Fg";
+import { NotFound } from "./components/NotFound";
 import "./App.css";
 
 export default function App() {
@@ -39,6 +40,8 @@ export default function App() {
               <Route path="/factors/af" element={<Af />} />
               <Route path="/factors/ag" element={<Ag />} />
               <Route path="/factors/ap" element={<Ap />} />
+
+              <Route path="*" element={<NotFound/>} />
             </Routes>
           </main>
           <footer>
