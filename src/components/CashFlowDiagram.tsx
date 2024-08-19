@@ -6,7 +6,10 @@ import {
   Textarea,
   Group,
   Text,
+  LoadingOverlay,
+  Box,
 } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 
 function limitWordCount(str: string, wordLimit: number): string {
@@ -23,8 +26,8 @@ const promptLLM = async (statement: string) => {
         method: "POST",
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-          "HTTP-Referer": `${import.meta.env.VITE_SITE_URL}`, // Optional, for including your app on openrouter.ai rankings.
-          "X-Title": `${import.meta.env.VITE_SITE_NAME}`, // Optional. Shows in rankings on openrouter.ai.
+          "HTTP-Referer": `${import.meta.env.VITE_SITE_URL}`,
+          "X-Title": `${import.meta.env.VITE_SITE_NAME}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -33,13 +36,13 @@ const promptLLM = async (statement: string) => {
         }),
       }
     );
-    console.log("Call LLM")
+    console.log("Call LLM");
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
 
     const json = await response.json();
-    console.log(json)
+    console.log(json);
     // TODO: load message content from LLM
     // console.log(json['choices'][0]['message']['content']);
   } catch (error) {
@@ -51,6 +54,7 @@ function CashFlowDiagram() {
   const theme = useMantineTheme();
   const [statement, setStatement] = useState("");
   const WORD_LIMIT = 500;
+  const [visible, { toggle }] = useDisclosure(false);
 
   const handleStatementChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -65,26 +69,40 @@ function CashFlowDiagram() {
       setStatement(limitedValue);
     }
   };
+
+  const handleGenerateButton = () => {
+    toggle();
+    promptLLM(statement);
+  };
   return (
     <Container>
-      <Textarea
-        placeholder="Enter your cash flow statement here"
-        label="Cash Flow Statement"
-        value={statement}
-        size={"md"}
-        onChange={(e) => handleStatementChange(e)}
-        minRows={4}
-        maxRows={7}
-        autosize
-        required
-        styles={{ input: { color: "#808080" } }}
-      />
-      <Group justify="flex-end" mt="xs">
-        <Text size="sm" style={{ color: theme.colors.brand[6] }}>
-          {statement.split(/\s+/).filter(Boolean).length} / {WORD_LIMIT} words
-        </Text>
-      </Group>
-      <Space h="xl" />
+      <Box pos="relative">
+        <LoadingOverlay
+          visible={visible}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
+
+        <Textarea
+          placeholder="Enter your cash flow statement here"
+          label="Cash Flow Statement"
+          value={statement}
+          size={"md"}
+          onChange={(e) => handleStatementChange(e)}
+          minRows={4}
+          maxRows={7}
+          autosize
+          required
+          styles={{ input: { color: "#808080" } }}
+        />
+        <Group justify="flex-end" mt="xs">
+          <Text size="sm" style={{ color: theme.colors.brand[6] }}>
+            {statement.split(/\s+/).filter(Boolean).length} / {WORD_LIMIT} words
+          </Text>
+        </Group>
+        <Space h="xl" />
+      </Box>
+
       <Group justify="center" mt="md">
         <Button
           radius="xl"
@@ -92,7 +110,7 @@ function CashFlowDiagram() {
           color={theme.colors.brand[9]}
           mb={"md"}
           disabled={statement.length === 0}
-          onClick={() => {promptLLM(statement)}}
+          onClick={() => handleGenerateButton()}
         >
           Generate Diagram
         </Button>
