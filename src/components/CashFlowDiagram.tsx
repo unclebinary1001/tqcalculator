@@ -18,43 +18,12 @@ function limitWordCount(str: string, wordLimit: number): string {
   return limitedWords.join(" ");
 }
 
-const promptLLM = async (statement: string) => {
-  try {
-    const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-          "HTTP-Referer": `${import.meta.env.VITE_SITE_URL}`,
-          "X-Title": `${import.meta.env.VITE_SITE_NAME}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "meta-llama/llama-3.1-8b-instruct:free",
-          messages: [{ role: "user", content: "What is the meaning of life?" }],
-        }),
-      }
-    );
-    console.log("Call LLM");
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    console.log(json);
-    // TODO: load message content from LLM
-    // console.log(json['choices'][0]['message']['content']);
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
 function CashFlowDiagram() {
   const theme = useMantineTheme();
   const [statement, setStatement] = useState("");
+  const [llmResponse, setResponse] = useState("");
   const WORD_LIMIT = 500;
-  const [visible, { toggle }] = useDisclosure(false);
+  const [visible, { open, close }] = useDisclosure(false);
 
   const handleStatementChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -70,8 +39,69 @@ function CashFlowDiagram() {
     }
   };
 
+  const promptLLM = async (statement: string) => {
+    try {
+      const prompt = `Given the statement below to generate a cash flow digram:
+                ${statement}
+                I want you to return the following information:
+                - Year Number
+                - Cash Flow Amount (If it an inflow, keep the amount as positive, if it is an outflow, return the amount as a negative number)
+                - Then consider one of the special cases provided below:
+                    - Future Value (calculate the future value)
+                    - Present Value (calulate the present worth)
+                Write a response in the following JSON format:
+                {
+                  "cashFlowDiagram": [
+                    {
+                      "year": "int",
+                      "amount": "float",
+                      "place name of special case here": "float"
+                    }
+                  ]
+                }`;
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+            "HTTP-Referer": `${import.meta.env.VITE_SITE_URL}`,
+            "X-Title": `${import.meta.env.VITE_SITE_NAME}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "nousresearch/hermes-3-llama-3.1-405b",
+            messages: [
+              {
+                role: "user",
+                content: `<|start_header_id|>user<|end_header_id|>{{ ${prompt}}}<|eot_id|><|start_header_id|>assistant<|end_header_id|>`,
+              },
+            ],
+            temperature: 0.0
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+      // TODO: load message content from LLM
+      handleResponse(json["choices"][0]["message"]["content"]);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleResponse = (response: string) => {
+    setResponse(response);
+    close();
+  };
+
   const handleGenerateButton = () => {
-    toggle();
+    setResponse("");
+    open();
     promptLLM(statement);
   };
   return (
@@ -115,6 +145,7 @@ function CashFlowDiagram() {
           Generate Diagram
         </Button>
       </Group>
+      <Text mb={"xl"}>{llmResponse.length !== 0 && llmResponse}</Text>
     </Container>
   );
 }
