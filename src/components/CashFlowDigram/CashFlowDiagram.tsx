@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import Demo from "./Chart";
+import Chart from "./Chart";
 
 function limitWordCount(str: string, wordLimit: number): string {
   const words = str.split(" ").filter(Boolean);
@@ -48,6 +48,7 @@ function CashFlowDiagram() {
                 I want you to return the following information:
                 - Year Number
                 - Cash Flow Amount (If the amount is a cash inflow, return the amount as a positive float number. If the amount is a cash outflow, return the amount as a negative float number)
+                - an explanation for what you did to generate the cash flow diagram data
                 Write a response in the following JSON format:
                 {
                   "cashFlowDiagram": [
@@ -55,7 +56,8 @@ function CashFlowDiagram() {
                       "year": "int",
                       "amount": "float"
                     }
-                  ]
+                  ],
+                  "explanation": "string"
                 }
                 Here are guidelines I want you to follow:
                 - Only return the JSON format given to you
@@ -86,7 +88,7 @@ function CashFlowDiagram() {
                  <|start_header_id|>assistant<|end_header_id|>`,
               },
             ],
-            temperature: 0.0,
+            temperature: 0.1,
           }),
         }
       );
@@ -95,16 +97,10 @@ function CashFlowDiagram() {
       }
 
       const json = await response.json();
-      console.log(json);
-      handleResponse(json["choices"][0]["message"]["content"]);
+      setResponse(json["choices"][0]["message"]["content"]);
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-
-  const handleResponse = (response: string) => {
-    setResponse(response);
-    close();
   };
 
   const handleGenerateButton = async () => {
@@ -113,6 +109,7 @@ function CashFlowDiagram() {
     open();
     await promptLLM(statement);
     setIsLoading(false);
+    close();
   };
   return (
     <Container>
@@ -155,7 +152,19 @@ function CashFlowDiagram() {
           Generate Diagram
         </Button>
       </Group>
-      <Text mb={"xl"}>{llmResponse.length !== 0 && llmResponse}</Text>
+      {llmResponse.length !== 0 && (
+        <>
+          <Chart cashFlowData={JSON.parse(llmResponse).cashFlowDiagram} />
+          <Space h="xl" />
+          <Text size="lg" style={{ color: theme.colors.brand[5] }}>
+            Explanation:
+          </Text>
+          <Text mb={"xl"} style={{ color: theme.colors.brand[6] }}>
+            {JSON.parse(llmResponse).explanation}
+          </Text>
+        </>
+      )}
+      <Space h="xl" />
     </Container>
   );
 }
