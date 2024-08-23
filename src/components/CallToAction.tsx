@@ -11,7 +11,7 @@ import {
 import { useMantineTheme } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CashFlowDiagram from "./CashFlowDiagram";
+import CashFlowDiagram from "./CashFlowDigram/CashFlowDiagram";
 
 interface FactorsProps {
   title: string;

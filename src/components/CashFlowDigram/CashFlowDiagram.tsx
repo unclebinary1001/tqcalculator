@@ -11,6 +11,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
+import Demo from "./Chart";
 
 function limitWordCount(str: string, wordLimit: number): string {
   const words = str.split(" ").filter(Boolean);
@@ -25,8 +26,6 @@ function CashFlowDiagram() {
   const WORD_LIMIT = 500;
   const [visible, { open, close }] = useDisclosure(false);
   const [isLoading, setIsLoading] = useState(false);
-
-
 
   const handleStatementChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -97,7 +96,6 @@ function CashFlowDiagram() {
 
       const json = await response.json();
       console.log(json);
-      // TODO: load message content from LLM
       handleResponse(json["choices"][0]["message"]["content"]);
     } catch (error) {
       console.error("Error:", error);
@@ -111,7 +109,7 @@ function CashFlowDiagram() {
 
   const handleGenerateButton = async () => {
     setResponse("");
-    setIsLoading(true)
+    setIsLoading(true);
     open();
     await promptLLM(statement);
     setIsLoading(false);
