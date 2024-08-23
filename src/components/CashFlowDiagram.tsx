@@ -24,6 +24,9 @@ function CashFlowDiagram() {
   const [llmResponse, setResponse] = useState("");
   const WORD_LIMIT = 500;
   const [visible, { open, close }] = useDisclosure(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+
 
   const handleStatementChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -45,20 +48,20 @@ function CashFlowDiagram() {
                 ${statement}
                 I want you to return the following information:
                 - Year Number
-                - Cash Flow Amount (If it an inflow, keep the amount as positive, if it is an outflow, return the amount as a negative number)
-                - Then consider one of the special cases provided below:
-                    - Future Value (calculate the future value)
-                    - Present Value (calulate the present worth)
+                - Cash Flow Amount (If the amount is a cash inflow, return the amount as a positive float number. If the amount is a cash outflow, return the amount as a negative float number)
                 Write a response in the following JSON format:
                 {
                   "cashFlowDiagram": [
                     {
                       "year": "int",
-                      "amount": "float",
-                      "place name of special case here": "float"
+                      "amount": "float"
                     }
                   ]
-                }`;
+                }
+                Here are guidelines I want you to follow:
+                - Only return the JSON format given to you
+                - If you are not sure about what value to insert, write the year or amount as 0
+                `;
       const response = await fetch(
         "https://openrouter.ai/api/v1/chat/completions",
         {
@@ -74,10 +77,17 @@ function CashFlowDiagram() {
             messages: [
               {
                 role: "user",
-                content: `<|start_header_id|>user<|end_header_id|>{{ ${prompt}}}<|eot_id|><|start_header_id|>assistant<|end_header_id|>`,
+                content: `<|begin_of_text|>
+                <|start_header_id|>system<|end_header_id|>
+                You are a higly intellligent engineering economy AI assistant with specialization in Cash Flow Diagrams
+                <|eot_id|>
+                <|start_header_id|>user<|end_header_id|>
+                {{ ${prompt}}}
+                 <|eot_id|>
+                 <|start_header_id|>assistant<|end_header_id|>`,
               },
             ],
-            temperature: 0.0
+            temperature: 0.0,
           }),
         }
       );
@@ -99,10 +109,12 @@ function CashFlowDiagram() {
     close();
   };
 
-  const handleGenerateButton = () => {
+  const handleGenerateButton = async () => {
     setResponse("");
+    setIsLoading(true)
     open();
-    promptLLM(statement);
+    await promptLLM(statement);
+    setIsLoading(false);
   };
   return (
     <Container>
@@ -139,7 +151,7 @@ function CashFlowDiagram() {
           variant="filled"
           color={theme.colors.brand[9]}
           mb={"md"}
-          disabled={statement.length === 0}
+          disabled={statement.length === 0 || isLoading}
           onClick={() => handleGenerateButton()}
         >
           Generate Diagram
