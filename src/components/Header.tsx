@@ -56,7 +56,7 @@ export function Header() {
           transitionDuration={300}
           hiddenFrom="xs"
           size="md"
-          style={{ zIndex: 1 }}
+          style={{ zIndex: 100 }}
         />
 
           {/* Mobile navbar */}

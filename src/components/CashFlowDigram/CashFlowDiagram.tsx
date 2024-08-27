@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import Chart from "./Chart";
+import CustomLineChart from "./CustomLineChart";
 
 function limitWordCount(str: string, wordLimit: number): string {
   const words = str.split(" ").filter(Boolean);
@@ -116,7 +116,7 @@ function CashFlowDiagram() {
       <Box pos="relative">
         <LoadingOverlay
           visible={visible}
-          zIndex={1000}
+          zIndex={1}
           overlayProps={{ radius: "sm", blur: 2 }}
         />
 
@@ -154,7 +154,7 @@ function CashFlowDiagram() {
       </Group>
       {llmResponse.length !== 0 && (
         <>
-          <Chart cashFlowData={JSON.parse(llmResponse).cashFlowDiagram} />
+          <CustomLineChart data={JSON.parse(llmResponse).cashFlowDiagram} />
           <Space h="xl" />
           <Text size="lg" style={{ color: theme.colors.brand[5] }}>
             Explanation:
