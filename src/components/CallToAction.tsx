@@ -9,7 +9,9 @@ import {
   Space,
 } from "@mantine/core";
 import { useMantineTheme } from "@mantine/core";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CashFlowDiagram from "./CashFlowDigram/CashFlowDiagram";
 
 interface FactorsProps {
   title: string;
@@ -122,17 +124,17 @@ const Factors = ({ title, description, shortform, route }: FactorsProps) => {
       <Text size="sm" mb={5}>
         {description}
       </Text>
-      <Text size="sm" style={{fontStyle: "italic"}} mb={2}>
+      <Text size="sm" style={{ fontStyle: "italic" }} mb={2}>
         {shortform}
       </Text>
-      <Space h={{ base: 10, xs:20, sm:30}} />
+      <Space h={{ base: 10, xs: 20, sm: 30 }} />
 
       <Button
         radius="xl"
         w={"100%"}
         variant="outline"
         color={theme.colors.brand[2]}
-        onClick={() => {navigate(route); window.scrollTo(0, 0);} }
+        onClick={() => { navigate(route); window.scrollTo(0, 0); }}
       >
         Calculate
       </Button>
@@ -142,6 +144,11 @@ const Factors = ({ title, description, shortform, route }: FactorsProps) => {
 
 export function CallToAction() {
   const theme = useMantineTheme();
+  const [selectedButton, setSelectedButton] = useState("discountFactors");
+
+  const handleButtonClick = (buttonValue: string) => {
+    setSelectedButton(buttonValue);
+  };
   return (
     <>
       <Box
@@ -185,34 +192,28 @@ export function CallToAction() {
       <Flex
         mih={50}
         gap="md"
-        justify="space-around"
+        justify="center"
         align="center"
         direction="row"
         wrap="wrap"
         mb={50}
       >
-        <Button radius="xl" variant="outline" color={theme.colors.brand[2]}>
+        <Button radius="xl" variant="filled" color={selectedButton === 'discountFactors' ? theme.colors.brand[2] : theme.colors.brand[5]} onClick={() => handleButtonClick('discountFactors')}
+        >
           Discount Factors
         </Button>
         <Button
           radius="xl"
-          variant="outline"
-          display={"none"}
-          color={theme.colors.brand[2]}
+          variant="filled"
+          color={selectedButton === 'cashFlowDiagram' ? theme.colors.brand[2] : theme.colors.brand[5]}
+          onClick={() => handleButtonClick('cashFlowDiagram')}
         >
-          Formulas
-        </Button>
-        <Button
-          radius="xl"
-          variant="outline"
-          display={"none"}
-          color={theme.colors.brand[2]}
-        >
-          Excel Functions
+          Draw Cash Flow Diagram
         </Button>
       </Flex>
       <Box>
-        <FactorsList />
+        {selectedButton === 'discountFactors' && <FactorsList />}
+        {selectedButton === 'cashFlowDiagram' && <CashFlowDiagram />}
       </Box>
     </>
   );
