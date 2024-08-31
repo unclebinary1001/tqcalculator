@@ -106,7 +106,7 @@ const Factors = ({ title, description, shortform, route }: FactorsProps) => {
       padding="md"
       radius="lg"
       w={"auto"}
-      h={{ base: 'auto', xs: 200 }}
+      h={{ base: "auto", xs: 200 }}
       withBorder
       style={{ borderColor: theme.colors.brand[4] }}
       mb={"md"}
@@ -134,7 +134,10 @@ const Factors = ({ title, description, shortform, route }: FactorsProps) => {
         w={"100%"}
         variant="outline"
         color={theme.colors.brand[2]}
-        onClick={() => { navigate(route); window.scrollTo(0, 0); }}
+        onClick={() => {
+          navigate(route);
+          window.scrollTo(0, 0);
+        }}
       >
         Calculate
       </Button>
@@ -152,7 +155,7 @@ export function CallToAction() {
   return (
     <>
       <Box
-        className="call-to-action"
+        id="call-to-action"
         p={40}
         h={"auto"}
         mx={{ base: 20, xs: 20, md: 40, lg: 60, xl: 80 }}
@@ -198,22 +201,34 @@ export function CallToAction() {
         wrap="wrap"
         mb={50}
       >
-        <Button radius="xl" variant="filled" color={selectedButton === 'discountFactors' ? theme.colors.brand[2] : theme.colors.brand[5]} onClick={() => handleButtonClick('discountFactors')}
+        <Button
+          radius="xl"
+          variant="filled"
+          color={
+            selectedButton === "discountFactors"
+              ? theme.colors.brand[2]
+              : theme.colors.brand[5]
+          }
+          onClick={() => handleButtonClick("discountFactors")}
         >
           Discount Factors
         </Button>
         <Button
           radius="xl"
           variant="filled"
-          color={selectedButton === 'cashFlowDiagram' ? theme.colors.brand[2] : theme.colors.brand[5]}
-          onClick={() => handleButtonClick('cashFlowDiagram')}
+          color={
+            selectedButton === "cashFlowDiagram"
+              ? theme.colors.brand[2]
+              : theme.colors.brand[5]
+          }
+          onClick={() => handleButtonClick("cashFlowDiagram")}
         >
           Draw Cash Flow Diagram
         </Button>
       </Flex>
       <Box>
-        {selectedButton === 'discountFactors' && <FactorsList />}
-        {selectedButton === 'cashFlowDiagram' && <CashFlowDiagram />}
+        {selectedButton === "discountFactors" && <FactorsList />}
+        {selectedButton === "cashFlowDiagram" && <CashFlowDiagram />}
       </Box>
     </>
   );
