@@ -74,7 +74,7 @@ function CashFlowDiagram() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            model: "nousresearch/hermes-3-llama-3.1-405b",
+            model: "meta-llama/llama-3.1-8b-instruct:free",
             messages: [
               {
                 role: "user",
