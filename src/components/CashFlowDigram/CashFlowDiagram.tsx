@@ -15,6 +15,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import CustomLineChart from "./CustomLineChart";
 import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
+import { FeedbackModal } from "./FeedbackModal";
 
 function limitWordCount(str: string, wordLimit: number): string {
   const words = str.split(" ").filter(Boolean);
@@ -22,41 +23,6 @@ function limitWordCount(str: string, wordLimit: number): string {
   return limitedWords.join(" ");
 }
 
-const FeedbackModal = ({
-  isPositive,
-  onClose,
-}: {
-  isPositive: boolean;
-  onClose: any;
-}) => {
-  const [feedback, setFeedback] = useState("");
-  const handleSubmit = () => {
-    onClose();
-  };
-
-  return (
-    <Center>
-      <Modal
-        opened={true}
-        onClose={onClose}
-        title={`${isPositive ? "Positive" : "Negative"} Feedback`}
-      >
-        <Textarea
-          value={feedback}
-          onChange={(e) => setFeedback(e.currentTarget.value)}
-          placeholder="Enter your feedback"
-        />
-        <Space h="md" />
-        <Button
-          onClick={handleSubmit}
-          color={useMantineTheme().colors.brand[6]}
-        >
-          Submit
-        </Button>
-      </Modal>
-    </Center>
-  );
-};
 
 function CashFlowDiagram() {
   const theme = useMantineTheme();
