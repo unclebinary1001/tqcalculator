@@ -8,16 +8,55 @@ import {
   Text,
   LoadingOverlay,
   Box,
+  Modal,
+  Center,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import CustomLineChart from "./CustomLineChart";
+import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 
 function limitWordCount(str: string, wordLimit: number): string {
   const words = str.split(" ").filter(Boolean);
   const limitedWords = words.slice(0, wordLimit);
   return limitedWords.join(" ");
 }
+
+const FeedbackModal = ({
+  isPositive,
+  onClose,
+}: {
+  isPositive: boolean;
+  onClose: any;
+}) => {
+  const [feedback, setFeedback] = useState("");
+  const handleSubmit = () => {
+    onClose();
+  };
+
+  return (
+    <Center>
+      <Modal
+        opened={true}
+        onClose={onClose}
+        title={`${isPositive ? "Positive" : "Negative"} Feedback`}
+      >
+        <Textarea
+          value={feedback}
+          onChange={(e) => setFeedback(e.currentTarget.value)}
+          placeholder="Enter your feedback"
+        />
+        <Space h="md" />
+        <Button
+          onClick={handleSubmit}
+          color={useMantineTheme().colors.brand[6]}
+        >
+          Submit
+        </Button>
+      </Modal>
+    </Center>
+  );
+};
 
 function CashFlowDiagram() {
   const theme = useMantineTheme();
@@ -26,6 +65,18 @@ function CashFlowDiagram() {
   const WORD_LIMIT = 500;
   const [visible, { open, close }] = useDisclosure(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [isPositiveFeedback, setisPositiveFeedback] = useState(false);
+
+  const handleFeedbackClick = (isPositive: boolean) => {
+    setisPositiveFeedback(isPositive);
+    setShowFeedbackModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowFeedbackModal(false);
+  };
 
   const handleStatementChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -88,7 +139,7 @@ function CashFlowDiagram() {
                  <|start_header_id|>assistant<|end_header_id|>`,
               },
             ],
-            temperature: 0.1,
+            temperature: 0.0,
           }),
         }
       );
@@ -132,12 +183,37 @@ function CashFlowDiagram() {
           required
           styles={{ input: { color: "#808080" } }}
         />
-        <Group justify="flex-end" mt="xs">
+        <Group justify="space-between" mt="xs">
           <Text size="sm" style={{ color: theme.colors.brand[6] }}>
             {statement.split(/\s+/).filter(Boolean).length} / {WORD_LIMIT} words
           </Text>
+          {llmResponse.length !== 0 && (
+            <Group>
+              <Text size="sm" style={{ color: theme.colors.brand[6] }}>
+                Please leave your feedback:
+              </Text>
+              <IconThumbUp
+                style={{ cursor: "pointer" }}
+                stroke={2}
+                color={theme.colors.brand[12]}
+                onClick={() => handleFeedbackClick(true)}
+              />
+              <IconThumbDown
+                style={{ cursor: "pointer" }}
+                stroke={2}
+                color={theme.colors.brand[12]}
+                onClick={() => handleFeedbackClick(false)}
+              />
+            </Group>
+          )}
+          {showFeedbackModal && (
+            <FeedbackModal
+              isPositive={isPositiveFeedback}
+              onClose={() => handleCloseModal()}
+            />
+          )}
         </Group>
-        <Space h="xl" />
+        <Space h="md" />
       </Box>
 
       <Group justify="center" mt="md">
