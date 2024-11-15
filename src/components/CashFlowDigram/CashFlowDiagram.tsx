@@ -8,8 +8,6 @@ import {
   Text,
   LoadingOverlay,
   Box,
-  Modal,
-  Center,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
@@ -22,7 +20,6 @@ function limitWordCount(str: string, wordLimit: number): string {
   const limitedWords = words.slice(0, wordLimit);
   return limitedWords.join(" ");
 }
-
 
 function CashFlowDiagram() {
   const theme = useMantineTheme();
@@ -176,6 +173,8 @@ function CashFlowDiagram() {
             <FeedbackModal
               isPositive={isPositiveFeedback}
               onClose={() => handleCloseModal()}
+              data={JSON.parse(llmResponse)}
+              prompt={statement}
             />
           )}
         </Group>
