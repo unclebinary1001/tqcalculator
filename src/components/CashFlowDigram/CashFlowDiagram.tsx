@@ -12,6 +12,8 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import CustomLineChart from "./CustomLineChart";
+import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
+import { FeedbackModal } from "./FeedbackModal";
 
 function limitWordCount(str: string, wordLimit: number): string {
   const words = str.split(" ").filter(Boolean);
@@ -26,6 +28,18 @@ function CashFlowDiagram() {
   const WORD_LIMIT = 500;
   const [visible, { open, close }] = useDisclosure(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [isPositiveFeedback, setisPositiveFeedback] = useState(false);
+
+  const handleFeedbackClick = (isPositive: boolean) => {
+    setisPositiveFeedback(isPositive);
+    setShowFeedbackModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowFeedbackModal(false);
+  };
 
   const handleStatementChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -88,7 +102,7 @@ function CashFlowDiagram() {
                  <|start_header_id|>assistant<|end_header_id|>`,
               },
             ],
-            temperature: 0.1,
+            temperature: 0.2,
           }),
         }
       );
@@ -132,12 +146,39 @@ function CashFlowDiagram() {
           required
           styles={{ input: { color: "#808080" } }}
         />
-        <Group justify="flex-end" mt="xs">
+        <Group justify="space-between" mt="xs">
           <Text size="sm" style={{ color: theme.colors.brand[6] }}>
             {statement.split(/\s+/).filter(Boolean).length} / {WORD_LIMIT} words
           </Text>
+          {llmResponse.length !== 0 && (
+            <Group>
+              <Text size="sm" style={{ color: theme.colors.brand[6] }}>
+                Please leave your feedback:
+              </Text>
+              <IconThumbUp
+                style={{ cursor: "pointer" }}
+                stroke={2}
+                color={theme.colors.brand[12]}
+                onClick={() => handleFeedbackClick(true)}
+              />
+              <IconThumbDown
+                style={{ cursor: "pointer" }}
+                stroke={2}
+                color={theme.colors.brand[12]}
+                onClick={() => handleFeedbackClick(false)}
+              />
+            </Group>
+          )}
+          {showFeedbackModal && (
+            <FeedbackModal
+              isPositive={isPositiveFeedback}
+              onClose={() => handleCloseModal()}
+              data={JSON.parse(llmResponse)}
+              prompt={statement}
+            />
+          )}
         </Group>
-        <Space h="xl" />
+        <Space h="md" />
       </Box>
 
       <Group justify="center" mt="md">
