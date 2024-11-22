@@ -102,7 +102,7 @@ function CashFlowDiagram() {
                  <|start_header_id|>assistant<|end_header_id|>`,
               },
             ],
-            temperature: 0.0,
+            temperature: 0.2,
           }),
         }
       );
