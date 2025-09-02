@@ -109,7 +109,7 @@ export default function Ag() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
+              <Text size={"md"} role="factor">{ans.factor == "0" ? "" : ans.factor}</Text>
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
@@ -127,7 +127,7 @@ export default function Ag() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>
+              <Text size={"md"} role="amount">
                 {ans.amountValue == "0" ? "" : "$" + ans.amountValue}
               </Text>
             </Box>

@@ -111,7 +111,7 @@ export default function Pg() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
+              <Text role="factor"size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
@@ -129,7 +129,7 @@ export default function Pg() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>
+              <Text role="presentWorth" size={"md"}>
                 {ans.presentValue == "0" ? "" : "$" + ans.presentValue}
               </Text>
             </Box>
