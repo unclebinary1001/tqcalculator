@@ -109,7 +109,7 @@ export default function Fa() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
+              <Text role="factor" size={"md"}>{ans.factor == "0" ? "" : ans.factor}</Text>
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: 12, xs: 6, sm: 4 }}>
@@ -127,7 +127,7 @@ export default function Fa() {
                 height: "2em",
               }}
             >
-              <Text size={"md"}>
+              <Text role="futureValue" size={"md"}>
                 {ans.futureValue == "0" ? "" : "$" + ans.futureValue}
               </Text>
             </Box>

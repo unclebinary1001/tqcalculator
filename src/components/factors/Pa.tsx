@@ -107,7 +107,7 @@ import {
                   height: '2em'
                 }}
               >
-                <Text size={"md"}>{ans.factor == "0"? "": ans.factor}</Text>
+                <Text role="factor" size={"md"}>{ans.factor == "0"? "": ans.factor}</Text>
               </Box>
              
             </Grid.Col>
@@ -126,7 +126,7 @@ import {
                   height: '2em'
                 }}
               >
-                <Text size={"md"}>{ans.presentValue == "0"? "": "$" + ans.presentValue}</Text>
+                <Text role="presentWorth" size={"md"}>{ans.presentValue == "0"? "": "$" + ans.presentValue}</Text>
               </Box>
               </Grid.Col>
           </Grid>
