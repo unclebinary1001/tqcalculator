@@ -16,7 +16,7 @@ import Pg from "./components/factors/Pg";
 import Fg from "./components/factors/Fg";
 import { NotFound } from "./components/NotFound";
 import "./App.css";
-import Tracker from '@openreplay/tracker';
+import Tracker from "@openreplay/tracker";
 import { useEffect } from "react";
 
 const tracker = new Tracker({
@@ -24,11 +24,11 @@ const tracker = new Tracker({
 });
 
 export default function App() {
-
-   useEffect(() => {
-      tracker.setUserID('mahlangu@tqcalculator.com');
-        tracker.start();
-    }, [])
+  useEffect(() => {
+    console.log("OpenReplay Project Key:", import.meta.env.VITE_OPENREPLAY_PROJECT_KEY);
+    tracker.setUserID("mahlangu@tqcalculator.com");
+    tracker.start();
+  }, []);
   return (
     <MantineProvider theme={theme}>
       <BrowserRouter>
@@ -52,7 +52,7 @@ export default function App() {
               <Route path="/factors/ag" element={<Ag />} />
               <Route path="/factors/ap" element={<Ap />} />
 
-              <Route path="*" element={<NotFound/>} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <footer>
