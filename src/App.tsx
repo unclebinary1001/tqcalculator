@@ -16,8 +16,19 @@ import Pg from "./components/factors/Pg";
 import Fg from "./components/factors/Fg";
 import { NotFound } from "./components/NotFound";
 import "./App.css";
+import Tracker from '@openreplay/tracker';
+import { useEffect } from "react";
+
+const tracker = new Tracker({
+  projectKey: `${import.meta.env.VITE_OPENREPLAY_PROJECT_KEY}`,
+});
 
 export default function App() {
+
+   useEffect(() => {
+      tracker.setUserID('mahlangu@tqcalculator.com');
+        tracker.start();
+    }, [])
   return (
     <MantineProvider theme={theme}>
       <BrowserRouter>
